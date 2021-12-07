@@ -1,9 +1,22 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class Category {
-    public final String bikeCategory = "Bikes";
-    public final String phoneCategory = "Phones";
-    public final String milkCategory = "Milk";
+public abstract class Category {
+    private String name;
+    List<Product> productList;
 
-    ArrayList <Product> productArrayList;
+    public Category(String name) {
+        this.name = name;
+        productList = new ArrayList<Product>();
+    }
+
+    public void addProduct(Product product) {
+        productList.add(product);
+    }
+
+    public String printProducts() {
+        String products = productList.toString();
+        return products;
+    }
 }
+

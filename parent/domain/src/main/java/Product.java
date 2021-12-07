@@ -4,10 +4,9 @@ public class Product {
     private int price;
     private Category category;
 
-    public Product(String name, int rate, int price, Category category) {
+    public Product(String name, int rate, int price) {
         this.name = name;
         this.rate = rate;
         this.price = price;
-        this.category = category;
     }
 }
