@@ -1,9 +1,9 @@
 public class Product {
     private String name;
     private int rate;
-    private long price;
+    private int price;
 
-    public Product(String name, int rate, long price) {
+    public Product(String name, int rate, int price) {
         this.name = name;
         this.rate = rate;
         this.price = price;
