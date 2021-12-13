@@ -20,7 +20,7 @@ public class Store {
 
         public void printAllCategoriesAndProduct () {
             for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-                System.out.print(entry.getKey().printProducts());
+                System.out.print(entry.getKey().toString());
             }
     }
 }

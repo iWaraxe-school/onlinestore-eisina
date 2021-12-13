@@ -9,7 +9,7 @@ public class Product {
         this.price = price;
     }
 
-    public String printProduct(){
+    public String toString(){
         String productInfo = "Name: " + name + " Rate: " + rate + "Price: " + price;
         return productInfo;
     }
