@@ -11,7 +11,7 @@ public class Store {
 
         for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
-                Product product = new Product(randomStorePopulator.setName("Food"), randomStorePopulator.setRate(), randomStorePopulator.setPrice());
+                Product product = new Product(randomStorePopulator.setName(entry.getKey().getName()), randomStorePopulator.setRate(), randomStorePopulator.setPrice());
                 entry.getKey().addProduct(product);
             }
         }

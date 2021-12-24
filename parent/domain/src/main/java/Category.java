@@ -18,5 +18,9 @@ public abstract class Category {
         String products = productList.toString();
         return products;
     }
+
+    public String getName() {
+        return name;
+    }
 }
 
