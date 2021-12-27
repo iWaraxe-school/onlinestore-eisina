@@ -14,9 +14,13 @@ public abstract class Category {
         productList.add(product);
     }
 
-    public String printProducts() {
+    public String toString() {
         String products = productList.toString();
         return products;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

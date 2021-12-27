@@ -18,7 +18,7 @@ public class RandomStorePopulator {
         return faker.random().nextInt(1,10);
     }
 
-    public long setPrice(){
-        return faker.random().nextLong();
+    public int setPrice(){
+        return faker.random().nextInt(1,10000);
     }
 }
