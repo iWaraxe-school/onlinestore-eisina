@@ -26,11 +26,11 @@ public class Store {
     }
 
     public List<Product> getProducts() {
-        List<Product> resultik =  new ArrayList<>();
+        List<Product> result =  new ArrayList<>();
         for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-            resultik.addAll(entry.getKey().getProductList());
+            result.addAll(entry.getKey().getProductList());
         }
-        return resultik;
+        return result;
     }
 }
 
