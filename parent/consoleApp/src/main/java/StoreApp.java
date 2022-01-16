@@ -1,17 +1,20 @@
-import org.reflections.Reflections;
+import org.xml.sax.SAXException;
 
-import java.util.*;
 import java.lang.reflect.*;
-
-import static org.reflections.scanners.Scanners.SubTypes;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.*;
 
 public class StoreApp {
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException {
 
         StoreHelper helper = new StoreHelper();
         Store onlineStore = new Store();
         helper.populateStore(onlineStore);
-    //    onlineStore.printAllCategoriesAndProduct();
+        onlineStore.printAllCategoriesAndProduct();
+
+        List<Product> productList = onlineStore.getProducts();
+        SortHelper sortHelper = new SortHelper();
 
         while (true)
         {
@@ -20,10 +23,12 @@ public class StoreApp {
             String option = input.next();
             switch (option){
                 case "sort":
-                    System.out.println("Soring the catalog");
+                    System.out.println("Sorting the catalog:");
+                    sortHelper.sort(productList);
                     break;
                 case "top":
                     System.out.println("The top 5 products are:");
+                    sortHelper.topProducts(productList);
                     break;
                 case "quit":
                     return;
