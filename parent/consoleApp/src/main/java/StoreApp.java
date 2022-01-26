@@ -16,8 +16,8 @@ public class StoreApp {
         List<Product> productList = onlineStore.getProducts();
         SortHelper sortHelper = new SortHelper();
 
-        while (true)
-        {
+        Boolean flag = true;
+        while (flag) {
             Scanner input = new Scanner(System.in);
             System.out.print("Enter text: ");
             String option = input.next();
@@ -31,6 +31,7 @@ public class StoreApp {
                     sortHelper.topProducts(productList);
                     break;
                 case "quit":
+                    flag = false;
                     return;
             }
             System.out.println();

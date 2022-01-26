@@ -5,11 +5,11 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigHelper {
 
-    public HashMap<String,String> getSortConfig() throws ParserConfigurationException, SAXException, IOException {
+    public Map<String,String> getSortConfig() throws ParserConfigurationException, SAXException, IOException {
     SAXParserFactory factory = SAXParserFactory.newInstance();
     SAXParser parser = factory.newSAXParser();
     ConfigParser saxp = new ConfigParser();

@@ -27,5 +27,7 @@ public class Product {
         String productInfo = " Name: " + name + " Rate: " + rate + " Price: " + price;
         return productInfo;
     }
+
+
 }
 

@@ -2,12 +2,14 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ConfigParser extends DefaultHandler {
 
         private String name,rate,price;
         private String thisElement = "";
-        private HashMap<String,String> orderList= new HashMap<>();
+        private Map<String,String> orderList= new LinkedHashMap<>();
 
         @Override
         public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
@@ -37,7 +39,7 @@ public class ConfigParser extends DefaultHandler {
             }
         }
 
-        public HashMap<String,String> getSortConfig() {
+        public Map<String,String> getSortConfig() {
             return orderList;
         }
     }

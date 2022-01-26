@@ -1,6 +1,5 @@
-import java.sql.Array;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,11 @@ public class Store {
     }
 
     public List<Product> getProducts() {
-        List<Product> result =  new ArrayList<>();
+        List<Product> listOfAllProducts =  new ArrayList<>();
         for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-            result.addAll(entry.getKey().getProductList());
+            listOfAllProducts.addAll(entry.getKey().getProductList());
         }
-        return result;
+        return listOfAllProducts;
     }
 }
 
