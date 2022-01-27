@@ -1,48 +1,38 @@
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.Map;
 
 public class SortByAllParameters implements Comparator<Product> {
-    private SortOrder nameOrder = SortOrder.ASC;
-    private SortOrder priceOrder = SortOrder.ASC;
-    private SortOrder rateOrder = SortOrder.ASC;
+    private Map<String, String> sortConf;
 
     public SortByAllParameters(Map<String, String> sortConf) {
-        if (sortConf == null) {
-            return;
-        }
-        if (sortConf.containsKey("name") && sortConf.get("name").equals(SortOrder.DESC.toString().toLowerCase())) {
-            nameOrder = SortOrder.DESC;
-        }
-        if (sortConf.containsKey("price") && sortConf.get("price").equals(SortOrder.DESC.toString().toLowerCase())) {
-            priceOrder = SortOrder.DESC;
-        }
-        if (sortConf.containsKey("rate") && sortConf.get("rate").equals(SortOrder.DESC.toString().toLowerCase())) {
-            rateOrder = SortOrder.DESC;
-        }
+        this.sortConf = sortConf;
     }
 
     @Override
-    public int compare(Product p1, Product p2) {
-        int c;
-        if (nameOrder == SortOrder.ASC) {
-            c = p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
-        } else {
-            c = p2.getName().toUpperCase().compareTo(p1.getName().toUpperCase());
-        }
-        if (c == 0) {
-            if (priceOrder == SortOrder.ASC) {
-                c = p1.getPrice() - p2.getPrice();
-            } else {
-                c = p2.getPrice() - p1.getPrice();
+    public int compare(Product a, Product b) {
+        CompareToBuilder compareBuilder = new CompareToBuilder();
+        for (Map.Entry<String, String> item : sortConf.entrySet()) {
+            String sortOrder = sortConf.get(item.getKey());
+            try {
+                if (sortOrder.equals(SortOrder.ASC.toString().toLowerCase()))
+                    compareBuilder.append(this.getPropertyValue(a, item.getKey()).toUpperCase(), this.getPropertyValue(b, item.getKey()).toUpperCase()).toComparison();
+                else
+                    compareBuilder.append(this.getPropertyValue(b, item.getKey()).toUpperCase(), this.getPropertyValue(a, item.getKey()).toUpperCase());
+            } catch (Exception e) {
+                System.out.println("Error occured");
+                return 0;
             }
         }
-        if (c == 0) {
-            if (rateOrder == SortOrder.ASC) {
-                c = p1.getRate() - p2.getRate();
-            } else {
-                c = p2.getRate() - p1.getRate();
-            }
-        }
-        return c;
+        return compareBuilder.toComparison();
     }
+
+    private String getPropertyValue(Product product, String property) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        String methodName = String.format("get%s",property.substring(0, 1).toUpperCase()+property.substring(1));
+        Class<? extends Product> productClass = product.getClass();
+        Method ProductMethod = productClass.getMethod(methodName);
+        return String.valueOf(ProductMethod.invoke(product));
+        }
 }
