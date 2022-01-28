@@ -22,5 +22,9 @@ public abstract class Category {
     public String getName() {
         return name;
     }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
 }
 

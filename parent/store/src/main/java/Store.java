@@ -1,5 +1,5 @@
-import java.sql.Array;
-import java.util.HashMap;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +18,19 @@ public class Store {
         this.categoryProductsMap = categoryProductsMap;
     }
 
-        public void printAllCategoriesAndProduct () {
-            for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-                System.out.print(entry.getKey().toString());
-            }
+    public void printAllCategoriesAndProduct() {
+        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
+            System.out.println(entry.getKey().toString() + " ");
+        }
+    }
+
+    public List<Product> getProducts() {
+        List<Product> listOfAllProducts =  new ArrayList<>();
+        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
+            listOfAllProducts.addAll(entry.getKey().getProductList());
+        }
+        return listOfAllProducts;
     }
 }
+
 
