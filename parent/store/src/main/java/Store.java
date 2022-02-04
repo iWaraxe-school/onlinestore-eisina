@@ -5,6 +5,14 @@ import java.util.Map;
 
 public class Store {
     Map<Category, Integer> categoryProductsMap;
+    private static Store instance;
+
+    public static Store getInstance() {
+        if (instance == null) {
+            instance = new Store();
+        }
+        return instance;
+    }
 
     public void fillStore(Map<Category, Integer> categoryProductsMap) {
         RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
