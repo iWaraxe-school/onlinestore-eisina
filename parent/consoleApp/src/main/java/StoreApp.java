@@ -9,7 +9,7 @@ public class StoreApp {
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException {
 
         StoreHelper helper = new StoreHelper();
-        Store onlineStore = new Store();
+        Store onlineStore = Store.getInstance();
         helper.populateStore(onlineStore);
         onlineStore.printAllCategoriesAndProduct();
 
