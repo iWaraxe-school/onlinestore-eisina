@@ -1,10 +1,13 @@
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.github.javafaker.Faker;
+
+import java.util.*;
 
 public class Store {
     Map<Category, Integer> categoryProductsMap;
+    public static List<Product> purchasedProducts = new ArrayList<>();
+    static Faker faker = new Faker();
+
     private static Store instance;
 
     public static Store getInstance() {
@@ -42,11 +45,26 @@ public class Store {
     }
 
     public List<Product> getProducts() {
-        List<Product> listOfAllProducts =  new ArrayList<>();
+        List<Product> listOfAllProducts = new ArrayList<>();
         for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
             listOfAllProducts.addAll(entry.getKey().getProductList());
         }
         return listOfAllProducts;
+    }
+
+    public Product getProductByName(String productName) {
+        Optional<Product> orderedProduct = getProducts().stream()
+                .filter(x -> x.getName().equals(productName))
+                .findFirst();
+        Product product = orderedProduct.isPresent() ? orderedProduct.get() : null;
+        return product;
+    }
+
+    static void createOrder(String name) {
+        Map<Product, Integer> orderMap = new HashMap<>();
+        orderMap.put(instance.getProductByName(name), faker.random().nextInt(1, 30));
+        Thread t = new Thread(new ThreadPurchasedOrder(orderMap));
+        new Thread(t).start();
     }
 }
 
