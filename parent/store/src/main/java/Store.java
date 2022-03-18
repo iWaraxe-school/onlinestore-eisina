@@ -1,12 +1,17 @@
 
 import com.github.javafaker.Faker;
 
+import java.sql.*;
 import java.util.*;
 
 public class Store {
     Map<Category, Integer> categoryProductsMap;
     public static List<Product> purchasedProducts = new ArrayList<>();
     static Faker faker = new Faker();
+    private Connection con = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+
 
     private static Store instance;
 
@@ -17,42 +22,22 @@ public class Store {
         return instance;
     }
 
-    public void fillStore(Map<Category, Integer> categoryProductsMap) {
-        RandomStorePopulatorFood randomStorePopulatorFood = new RandomStorePopulatorFood();
-        RandomStorePopulatorPet randomStorePopulatorPet = new RandomStorePopulatorPet();
-
-        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-            for (int i = 0; i < entry.getValue(); i++) {
-                switch (entry.getKey().getName()) {
-                    case "Food":
-                        Product foodProduct = new Product(randomStorePopulatorFood.setName(), randomStorePopulatorFood.setRate(), randomStorePopulatorFood.setPrice());
-                        entry.getKey().addProduct(foodProduct);
-                        break;
-                    case "Pet":
-                        Product petProduct = new Product(randomStorePopulatorPet.setName(), randomStorePopulatorPet.setRate(), randomStorePopulatorPet.setPrice());
-                        entry.getKey().addProduct(petProduct);
-                        break;
-                }
-            }
-            this.categoryProductsMap = categoryProductsMap;
-        }
+    public void printAllCategoriesAndProduct() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
+        rs = readProduct();
+        printProductInfo(rs);
     }
 
-    public void printAllCategoriesAndProduct() {
-        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-            System.out.println(entry.getKey().toString() + " ");
-        }
-    }
-
-    public List<Product> getProducts() {
+    public List<Product> getProducts() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        rs = readProduct();
         List<Product> listOfAllProducts = new ArrayList<>();
-        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet()) {
-            listOfAllProducts.addAll(entry.getKey().getProductList());
+        while (rs.next()) {
+            Product listed = new Product(rs.getString("Name"), rs.getInt("rate"), rs.getInt("price"));
+            listOfAllProducts.add(listed);
         }
         return listOfAllProducts;
     }
 
-    public Product getProductByName(String productName) {
+    public Product getProductByName(String productName) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         Optional<Product> orderedProduct = getProducts().stream()
                 .filter(x -> x.getName().equals(productName))
                 .findFirst();
@@ -60,11 +45,28 @@ public class Store {
         return product;
     }
 
-    static void createOrder(String name) {
+    static void createOrder(String name) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         Map<Product, Integer> orderMap = new HashMap<>();
         orderMap.put(instance.getProductByName(name), faker.random().nextInt(1, 30));
         Thread t = new Thread(new ThreadPurchasedOrder(orderMap));
         new Thread(t).start();
+    }
+
+    public void printProductInfo(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            String name = rs.getString("name");
+            int price = rs.getInt("price");
+            int rate = rs.getInt("rate");
+            String category = rs.getString("category");
+            System.out.println(" Category - " + category + " Product " + name + " Rate - " + rate + " Price " + price);
+        }
+    }
+
+    public ResultSet readProduct() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
+        con = DatabaseHelper.getConnection();
+        stmt = con.createStatement();
+        String sql = "SELECT * FROM PRODUCTS";
+        return stmt.executeQuery(sql);
     }
 }
 

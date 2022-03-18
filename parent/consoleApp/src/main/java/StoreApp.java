@@ -1,30 +1,27 @@
 import org.xml.sax.SAXException;
-
-import java.lang.reflect.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.sql.*;
 import java.util.*;
 
 public class StoreApp {
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, InterruptedException {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, InterruptedException, SQLException, ClassNotFoundException {
 
-        StoreHelper helper = new StoreHelper();
         Store onlineStore = Store.getInstance();
-        helper.populateStore(onlineStore);
         onlineStore.printAllCategoriesAndProduct();
 
         List<Product> productList = onlineStore.getProducts();
         SortHelper sortHelper = new SortHelper();
 
         Timer timer = new Timer();
-        timer.schedule(new TimerHelper(),0,120000);
+        timer.schedule(new TimerHelper(), 0, 120000);
 
         Boolean flag = true;
         while (flag) {
             Scanner input = new Scanner(System.in);
             System.out.print("Enter operation: ");
             String option = input.next();
-            switch (option){
+            switch (option) {
                 case "sort":
                     System.out.println("Sorting the catalog:");
                     sortHelper.sort(productList);
