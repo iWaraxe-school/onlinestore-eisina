@@ -7,6 +7,10 @@ import java.util.*;
 public class StoreApp {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, InterruptedException, SQLException, ClassNotFoundException {
 
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        Populator populator = new Populator(databaseHelper);
+        populator.fillDbByFaker();
+
         Store onlineStore = Store.getInstance();
         onlineStore.printAllCategoriesAndProduct();
 

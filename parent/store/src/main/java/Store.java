@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.*;
 
 public class Store {
-    Map<Category, Integer> categoryProductsMap;
     public static List<Product> purchasedProducts = new ArrayList<>();
     static Faker faker = new Faker();
     private Connection con = null;
@@ -57,15 +56,19 @@ public class Store {
             String name = rs.getString("name");
             int price = rs.getInt("price");
             int rate = rs.getInt("rate");
-            String category = rs.getString("category");
-            System.out.println(" Category - " + category + " Product " + name + " Rate - " + rate + " Price " + price);
+            String category = rs.getString("category_name");
+            System.out.println(" Category - " + category + ", Product " + name + ", Rate - " + rate + ", Price " + price);
         }
     }
 
     public ResultSet readProduct() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
-        con = DatabaseHelper.getConnection();
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        con = databaseHelper.getConnection();
         stmt = con.createStatement();
-        String sql = "SELECT * FROM PRODUCTS";
+        String sql = "SELECT P.NAME, P.PRICE, P.RATE, C.CATEGORY_NAME " +
+                "FROM PRODUCTS P " +
+                "INNER JOIN CATEGORIES C " +
+                "ON C.CAT_ID=P.CAT_ID";
         return stmt.executeQuery(sql);
     }
 }
