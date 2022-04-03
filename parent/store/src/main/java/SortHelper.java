@@ -31,4 +31,17 @@ public class SortHelper {
             System.out.println(product);
         }
     }
+
+        public String topProducts1(List<Product> productList) throws IOException, SAXException, ParserConfigurationException {
+            String result =" " ;
+        Collections.sort(productList, Collections.reverseOrder(new SortByPrice()));
+            List<Product> firstFiveProducts = productList
+                    .stream()
+                    .limit(5)
+                    .collect(Collectors.toList());
+            for (Product product : firstFiveProducts) {
+                 result =  product.toString();
+            }
+            return result;
+        }
 }

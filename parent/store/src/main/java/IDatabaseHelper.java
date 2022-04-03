@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +13,9 @@ public interface IDatabaseHelper {
         void createTableIfDoesNotExist() throws SQLException;
 
         void insertCategoryIntoDB(String categoryName) throws SQLException;
+
+        JSONObject insertCategoryIntoDB(JSONObject categoryName) throws SQLException;
+
 
         void insertProductIntoDB(String name, String category, int price, int rate) throws SQLException;
 

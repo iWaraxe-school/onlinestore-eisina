@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +85,22 @@ public class DatabaseHelper implements IDatabaseHelper {
         preparedStatement.setInt(3, price);
         preparedStatement.setInt(4, categoryID);
         preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public JSONObject insertCategoryIntoDB(JSONObject jsonObject) throws SQLException {
+        JSONArray jsonArray = jsonObject.getJSONArray("ImageData");
+
+        JSONObject innerObj = new JSONObject(jsonArray);
+        String name = innerObj.getString("Name");
+        conn = getConnection();
+        stmt = conn.createStatement();
+        String SQL_INSERT = "INSERT INTO CATEGORIES (CATEGORY_NAME) VALUES (?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT);
+        preparedStatement.setString(1, name);
+        preparedStatement.executeUpdate();
+
+        return jsonObject;
     }
 
     @Override
