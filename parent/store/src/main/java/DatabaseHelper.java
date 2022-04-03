@@ -74,7 +74,7 @@ public class DatabaseHelper implements IDatabaseHelper {
     public void insertProductIntoDB(String name, String category, int price, int rate) throws SQLException {
         conn = getConnection();
         stmt = conn.createStatement();
-        String sql = String.format("SELECT * FROM CATEGORIES WHERE CATEGORY_NAME = '%s'", category);
+        String sql = String.format("SELECT CAT_ID FROM CATEGORIES WHERE CATEGORY_NAME = '%s'", category);
         ResultSet rs = stmt.executeQuery(sql);
         rs.next();
         int categoryID = rs.getInt("CAT_ID");
@@ -87,21 +87,6 @@ public class DatabaseHelper implements IDatabaseHelper {
         preparedStatement.executeUpdate();
     }
 
-    @Override
-    public JSONObject insertCategoryIntoDB(JSONObject jsonObject) throws SQLException {
-        JSONArray jsonArray = jsonObject.getJSONArray("ImageData");
-
-        JSONObject innerObj = new JSONObject(jsonArray);
-        String name = innerObj.getString("Name");
-        conn = getConnection();
-        stmt = conn.createStatement();
-        String SQL_INSERT = "INSERT INTO CATEGORIES (CATEGORY_NAME) VALUES (?)";
-        PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT);
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
-
-        return jsonObject;
-    }
 
     @Override
     public List<Category> getAllCategories() throws SQLException {

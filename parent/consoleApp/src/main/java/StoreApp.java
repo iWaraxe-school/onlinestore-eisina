@@ -12,14 +12,15 @@ public class StoreApp {
         Populator populator = new Populator(databaseHelper);
         populator.fillDbByFaker();
 
-        Store onlineStore = Store.getInstance();
-       // onlineStore.printAllCategoriesAndProduct();
+     //   Store onlineStore = Store.getInstance();
+     //   onlineStore.printAllCategoriesAndProduct();
 
-        List<Product> productList = onlineStore.getProducts();
+      //  List<Product> productList = onlineStore.getProducts();
         SortHelper sortHelper = new SortHelper();
 
         Timer timer = new Timer();
         timer.schedule(new TimerHelper(), 0, 120000);
+
 //
 //        Boolean flag = true;
 //        while (flag) {
@@ -47,14 +48,13 @@ public class StoreApp {
 //            System.out.println();
 //        }
         //  {
-        JSONObject req = new JSONObject();
-        req.put("name","Category55");
-        System.out.println(req.toString());
+
         HttpServerConnector httpServerConnector = new HttpServerConnector();
         httpServerConnector.connectServer();
         ClientConnector clientConnector = new ClientConnector();
-        clientConnector.sendPOST(req);
-        System.out.println(clientConnector.getCategories());
+      //  clientConnector.sendPOST("Aftdferall");
+        clientConnector.createOrder("monkey");
+        //  System.out.println(clientConnector.getCategories());
     }
 
     }

@@ -14,9 +14,6 @@ public interface IDatabaseHelper {
 
         void insertCategoryIntoDB(String categoryName) throws SQLException;
 
-        JSONObject insertCategoryIntoDB(JSONObject categoryName) throws SQLException;
-
-
         void insertProductIntoDB(String name, String category, int price, int rate) throws SQLException;
 
         List<Category> getAllCategories() throws SQLException;
