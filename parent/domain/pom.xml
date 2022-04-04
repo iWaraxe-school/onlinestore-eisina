@@ -20,6 +20,13 @@
             <version>0.10.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.user.deploy</groupId>
+            <artifactId>deploy-jar</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>/Users/ekaterinaisina/Downloads/deploy.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <properties>

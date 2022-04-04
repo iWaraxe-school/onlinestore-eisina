@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +74,7 @@ public class DatabaseHelper implements IDatabaseHelper {
     public void insertProductIntoDB(String name, String category, int price, int rate) throws SQLException {
         conn = getConnection();
         stmt = conn.createStatement();
-        String sql = String.format("SELECT * FROM CATEGORIES WHERE CATEGORY_NAME = '%s'", category);
+        String sql = String.format("SELECT CAT_ID FROM CATEGORIES WHERE CATEGORY_NAME = '%s'", category);
         ResultSet rs = stmt.executeQuery(sql);
         rs.next();
         int categoryID = rs.getInt("CAT_ID");
@@ -83,6 +86,7 @@ public class DatabaseHelper implements IDatabaseHelper {
         preparedStatement.setInt(4, categoryID);
         preparedStatement.executeUpdate();
     }
+
 
     @Override
     public List<Category> getAllCategories() throws SQLException {
